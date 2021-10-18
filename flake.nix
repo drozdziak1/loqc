@@ -23,8 +23,10 @@
         in
           rec {
             devShell = pkgs.mkShell {
-              nativeBuildInputs = with pkgs; [ #(callPackage cargo2nix {}).package
-                                               rust-bin.stable."1.55.0" ];
+              nativeBuildInputs = with pkgs; [
+                (callPackage cargo2nix {}).package
+                rust-bin.stable."1.55.0".default
+              ];
             };
             packages = rec {};
           }
