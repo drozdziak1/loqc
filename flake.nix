@@ -20,7 +20,7 @@
             inherit system;
             config.allowUnfree = true;
           };
-          rustChannel = "1.53.0";
+          rustChannel = "1.55.0";
           rustPkgs = pkgs.rustBuilder.makePackageSet' {
             inherit rustChannel;
             packageFun = import ./Cargo.nix;
@@ -41,10 +41,12 @@
               loqc-container-image = pkgs.dockerTools.buildImage {
                 name = "loqc/app";
                 tag = "latest";
+                config = {
+                  Cmd = "${loqc}/bin/loqc";
+                };
               };
               loqc = rustPkgs.workspace.loqc {};
             };
-            packages = rec {};
           }
     );
 

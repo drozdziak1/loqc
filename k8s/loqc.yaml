@@ -1,0 +1,18 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: loqc
+spec:
+  selector:
+    matchLabels:
+      app: loqc
+  serviceName: loqc
+  template:
+    metadata:
+      labels:
+        app: loqc
+    spec:
+      containers:
+        - name: app
+          image: loqc/app
