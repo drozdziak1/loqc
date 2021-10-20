@@ -20,13 +20,29 @@
             inherit system;
             config.allowUnfree = true;
           };
+          rustChannel = "1.53.0";
+          rustPkgs = pkgs.rustBuilder.makePackageSet' {
+            inherit rustChannel;
+            packageFun = import ./Cargo.nix;
+            packageOverrides = pkgs: pkgs.rustBuilder.overrides.all;
+          };
         in
           rec {
             devShell = pkgs.mkShell {
               nativeBuildInputs = with pkgs; [
                 (callPackage cargo2nix {}).package
-                rust-bin.stable."1.55.0".default
+                minikube
+                rust-bin.stable."${rustChannel}".default
+                tilt
               ];
+              DOCKER_BUILDKIT = 1;
+            };
+            packages = rec {
+              loqc-container-image = pkgs.dockerTools.buildImage {
+                name = "loqc/app";
+                tag = "latest";
+              };
+              loqc = rustPkgs.workspace.loqc {};
             };
             packages = rec {};
           }
