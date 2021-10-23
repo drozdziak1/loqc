@@ -1,0 +1,18 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: matrix-homeserver
+spec:
+  selector:
+    matchLabels:
+      app: matrix-homeserver
+  serviceName: matrix-homeserver
+  template:
+    metadata:
+      labels:
+        app: matrix-homeserver
+    spec:
+      containers:
+        - name: matrix-homeserver
+          image: loqc/matrix-homeserver

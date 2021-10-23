@@ -31,6 +31,7 @@
             devShell = pkgs.mkShell {
               nativeBuildInputs = with pkgs; [
                 (callPackage cargo2nix {}).package
+                kubectl
                 minikube
                 rust-bin.stable."${rustChannel}".default
                 tilt

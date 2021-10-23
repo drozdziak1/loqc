@@ -6,3 +6,11 @@ custom_build(
     tag = "latest"
 );
 k8s_yaml("k8s/loqc.yaml");
+
+docker_build(
+    ref = "loqc/matrix-homeserver",
+    dockerfile = "k8s/matrix-homeserver.dockerfile",
+    context = "."
+);
+
+k8s_yaml("k8s/matrix-homeserver.yaml");
