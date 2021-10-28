@@ -33,7 +33,12 @@
                 (callPackage cargo2nix {}).package
                 kubectl
                 minikube
-                rust-bin.stable."${rustChannel}".default
+                (
+                  rust-bin.stable."${rustChannel}".default.override {
+                    extensions = [ "rust-src" ];
+                  }
+                )
+                rust-analyzer
                 tilt
               ];
               DOCKER_BUILDKIT = 1;
